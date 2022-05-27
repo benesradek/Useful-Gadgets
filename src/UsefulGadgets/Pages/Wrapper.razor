@@ -1,0 +1,47 @@
+﻿@page "/wrapper"
+@using UsefulGadgets.Services
+@inject IWrapperService WrapperService
+
+<PageTitle>Wrapper</PageTitle>
+
+<h1>Wrapper</h1>
+<div class=row>
+    <div class="col">
+        <label class="form-label">
+            Input sentence:
+            <input type="text" class="form-control" @bind-value=@sentence />
+        </label>
+    </div>
+</div>
+<div class=row>
+    <div class="col">
+        <label class="form-label">
+            Input list:
+            <textarea class="form-control" @bind=@list></textarea>
+        </label>
+    </div>
+    <div class="col">
+        <label class="form-label">
+            Result:
+            <textarea class="form-control" @bind=@result></textarea>
+        </label>
+    </div>
+</div>
+<div class=row>
+    <div class="col">
+        <button class="btn btn-primary" @onclick="Wrap">Wrap</button>
+    </div>
+</div>
+
+
+
+@code {
+    private string sentence = "";
+    private string list = "";
+    private string result = "";
+
+    private void Wrap()
+    {
+        result = WrapperService.Process(sentence, list);
+    }
+}
