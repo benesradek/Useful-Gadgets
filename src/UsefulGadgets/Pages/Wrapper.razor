@@ -5,31 +5,46 @@
 <PageTitle>Wrapper</PageTitle>
 
 <h1>Wrapper</h1>
-<div class=row>
-    <div class="col">
-        <label class="form-label">
-            Input sentence:
-            <input type="text" class="form-control" @bind-value=@sentence />
-        </label>
+<div class="row mt-3">
+    <div class="col-8">
+        <div class="form-group">
+            <label for="textSentence" class="form-label">Input sentence:</label>
+            <input id="textSentence" type="text" class="form-control" @bind-value=@sentence />        
+        </div>
     </div>
+    <div class="col-2">
+        <div class="form-group">
+            <label for="numberCounter" class="form-label">Counter:</label>
+            <input id="numberCounter" type="number" class="form-control" @bind-value=@counter />
+        </div>
+    </div>
+    <div class="col-2 ">
+        <div class="form-group">
+            <label for="textDelimiter" class="form-label">Delimiter:</label>
+            <input id="textDelimiter" type="text" class="form-control" @bind-value=@delimiter />   
+        </div>
+    </div>
+    
 </div>
-<div class=row>
-    <div class="col">
-        <label class="form-label">
-            Input list:
-            <textarea class="form-control" @bind=@list></textarea>
-        </label>
+<div class="row mt-3">
+    <div class="col-6">
+        <div class="form-group">
+            <label for="inputList" class="form-label">Input list:</label>
+            <textarea id="inputList" class="form-control" rows="10" @bind=@list></textarea>
+        </div>
     </div>
-    <div class="col">
-        <label class="form-label">
-            Result:
-            <textarea class="form-control" @bind=@result></textarea>
-        </label>
-    </div>
+    <div class="col-6 ">
+        <div class="form-group">
+            <label for="resultList" class="form-label">Result: </label>
+            <textarea id="resultList" class="form-control" rows="10" @bind=@result></textarea>
+        </div>
+    </div>    
 </div>
-<div class=row>
+<div class="row mt-3">
     <div class="col">
-        <button class="btn btn-primary" @onclick="Wrap">Wrap</button>
+        <div class="form-group">
+            <button class="btn btn-primary" @onclick="Wrap">Wrap it!</button>
+        </div>
     </div>
 </div>
 
@@ -39,9 +54,11 @@
     private string sentence = "";
     private string list = "";
     private string result = "";
+    private string delimiter = "|";
+    private int counter = 0;
 
     private void Wrap()
     {
-        result = WrapperService.Process(sentence, list);
+        result = WrapperService.Process(sentence, list, counter, delimiter.Length > 0 ?delimiter.First() : '|');
     }
 }

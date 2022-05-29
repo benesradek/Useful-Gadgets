@@ -2,6 +2,6 @@
 {
     public interface IWrapperService
     {
-        string Process(string sentence, string list);
+        string Process(string sentence, string list, int counter, char separator);
     }
 }

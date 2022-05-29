@@ -2,7 +2,7 @@
 {
     public class WrapperService : IWrapperService
     {
-        public string Process(string sentence, string list)
+        public string Process(string sentence, string list, int counter, char separator)
         {
             if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(list))
                 return "";
@@ -12,7 +12,9 @@
 
             foreach (var item in items)
             {
-                result.Add(string.Format(sentence, item));
+                sentence = sentence.Replace("%%counter%%", counter.ToString());
+                result.Add(string.Format(sentence, item.Split(separator)));
+                counter++;
             }
 
             return string.Join(Environment.NewLine, result);
