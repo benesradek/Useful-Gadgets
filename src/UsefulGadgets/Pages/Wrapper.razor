@@ -2,6 +2,28 @@
 @using UsefulGadgets.Services
 @inject IWrapperService WrapperService
 
+@if (showHelp)
+{
+    <div class="modal fade show" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Help</h5>
+                </div>
+                <div class="modal-body">
+                    <p>This easy wrapper can you help with batch of row of data what you need to wrap.</p>
+                    <p>There is example input string:<br>&lt;Translation key=&quot;{0}.<b>%%counter%%</b>&quot; value=&quot;<b>{1:wordSplit}</b>&quot;&gt;</p>
+
+                    <p>And there is first row of list:<br>132|UsefulGadgetsOfTheWorld</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="@(() => { showHelp = false; })">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 <PageTitle>Wrapper</PageTitle>
 
 <h1>Wrapper</h1>
@@ -46,6 +68,11 @@
             <button class="btn btn-primary" @onclick="Wrap">Wrap it!</button>
         </div>
     </div>
+    <div class="col">
+        <div class="form-group">
+            <button class="btn btn-secondary" @onclick="@(() => { showHelp = true; })">Help</button>
+        </div>
+    </div>
 </div>
 
 
@@ -56,9 +83,17 @@
     private string result = "";
     private string delimiter = "|";
     private int counter = 0;
+    bool showHelp = false;
 
     private void Wrap()
     {
-        result = WrapperService.Process(sentence, list, counter, delimiter.Length > 0 ?delimiter.First() : '|');
+        try
+        {
+            result = WrapperService.Process(sentence, list, counter, delimiter.Length > 0 ? delimiter.First() : '|');
+        }
+        catch (Exception ex)
+        {
+            result = $"Exception{Environment.NewLine}{ex.Message}";
+        }
     }
 }

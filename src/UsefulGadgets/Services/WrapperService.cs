@@ -7,13 +7,17 @@
             if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(list))
                 return "";
 
+            var wordSplitter = new WordSplitter();
             var items = list.Split(Environment.NewLine);
             var result = new List<string>();
 
             foreach (var item in items)
             {
                 sentence = sentence.Replace("%%counter%%", counter.ToString());
-                result.Add(string.Format(sentence, item.Split(separator)));
+                var columns = item.Split(separator);
+                sentence = wordSplitter.ReplaceWithSplittedWords(sentence, columns);
+
+                result.Add(string.Format(sentence, columns));
                 counter++;
             }
 
